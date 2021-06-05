@@ -1,0 +1,50 @@
+{% extends "base_project.html" %}
+{% block title %}User main page{% endblock %}
+{% block content %}
+<h2 style="color:white;">welcome {{user.name}}!</h2>
+<p>Fill out the date and country your gonna be in:</p>
+<form action="#" method="post">
+{% if date %}
+    <input type="date" name="d" value={{date}}>date</input><br>
+{% else %}
+    <input type="date" name="d">date</input><br>
+{% endif %}
+<label for="state">Choose a country:</label>
+  <select id="state" name="c">
+    {% if country %}
+	    {% for s in states %}
+	        {% if s==country %}
+                <option value="{{s}}" selected>{{s}}</option>
+			{% else %}
+                <option value="{{s}}">{{s}}</option>      			
+	        {% endif %}
+		{% endfor %}
+    {% else %}
+        {% for s in states %}
+            <option value="{{s}}">{{s}}</option> 
+        {% endfor %}
+    {% endif %}		
+  </select>
+<input type="submit" value="Submit"></input>
+</form>
+{% if concerts %}
+    {% for x in concerts %}   
+		<div class="card">
+  <h5 class="card-header">{{x.event}}</h5>
+  <div class="card-body">
+    <h5 class="card-title">{{x.artists}}</h5>
+    <h5 class="card-title">{{x.day}} in {{x.month}},{{x.year}} </h5>
+    <p class="card-text">{{x.venue}},{{x.address}},{{x.state}}</p>
+	{% if user in x.registered %}
+        <p>added to My Events<p>
+	{% else %}	
+	    <form action="/add" method="post">
+		
+		<button type="submit" class="btn btn-success" name="add" value={{x.concert_id}}>add to My Events</button>
+		</form>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

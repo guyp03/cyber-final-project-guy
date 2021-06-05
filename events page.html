@@ -1,0 +1,22 @@
+{% extends "base_project.html" %}
+{% block title %}My events{% endblock %}
+{% block content %}
+{% if concerts %}
+    {% for x in concerts %}   
+		<div class="card">
+  <h5 class="card-header">{{x.event}}</h5>
+  <div class="card-body">
+    <h5 class="card-title">{{x.artists}}</h5>
+    <h5 class="card-title">{{x.day}} in {{x.month}},{{x.year}} </h5>
+    <p class="card-text">{{x.venue}},{{x.address}},{{x.state}}</p>
+	<form action="/remove" method="post">
+		<button type="submit" class="btn btn-danger" name="remove" value={{x.concert_id}}>remove from My events</button>
+	</form>
+	</div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+{% endblock %}
